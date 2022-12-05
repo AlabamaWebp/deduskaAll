@@ -1,0 +1,159 @@
+* {
+    box-sizing: border-box;
+}
+$black: #2d2929;
+$hover-color: #1f6a6a;
+$border_settings: solid white 1px;
+.wraper {
+    width: 100%;
+    height: 100%;
+    background-color: $black;
+}
+.header {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    padding: 15px 50px;
+    .container {
+        display: flex;
+        // background-color: #fff;
+        width: 100%;
+        height: 100%;
+        .poisk {
+            width: 50%;
+            height: 100%;
+            // background-color: red;
+            margin: 0 5% 0 0;
+            input {
+                width: 100%;
+                height: 100%;
+                font-size: 24px;
+                background-color: $black;
+                border: 1px white solid;
+                color: white;
+            }
+        }
+        .filter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: $black;
+            border: $border_settings;
+            color: white;
+            width: 20%;
+            height: 100%;
+            .p {
+                padding: 15px;
+                cursor: pointer;
+                &:hover {
+                    background-color: #1f6a6a;
+                }
+            }
+        }
+        .strela {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: $black;
+            border: $border_settings;
+            color: white;
+            width: 5%;
+            height: 100%;
+            div {
+                transform: rotate(90deg);
+            }
+        }
+        .sort {
+            z-index: 2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $black;
+            border: $border_settings;
+            color: white;
+            width: 15%;
+            height: 100%;
+            margin: 0 0 0 5%;
+            position: relative;
+            transition: .2s;
+
+            &:hover {
+                .placeholder {
+                    pointer-events: all;
+                    opacity: 1;
+                }
+            }
+            .placeholder {
+                transition: .2s;
+                pointer-events: none;
+                opacity: 0;
+                // display: flex;
+                // flex-direction: column;
+                // justify-content: center;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                .cont {
+                    transition: .2s;
+                    background: $black;
+                    border: $border_settings;
+                    display: flex;
+                    justify-content: center;
+                    width: 100%;
+                    padding: 10px;
+                    cursor: pointer;
+                    &:hover {
+                        background-color: $hover-color;
+                    }
+                }   
+            }
+        }
+    }
+}
+.main {
+    width: 100%;
+    height: 100%;
+    padding: 20px 5%;
+}
+.agents {
+    display: flex;
+    width: 100%;
+    height: 137px;
+    border: $border_settings;
+    position: relative;
+    margin: 0 0 30px;
+    // justify-content: space-between;
+    .image {
+        height: 125px;
+        width: 200px;
+        margin: 5px;
+        border: $border_settings;
+    }
+    .info {
+        height: 100%;
+        // width: 30%;
+        padding: 10px;
+        // background-color: red;
+        display: flex;
+        flex: 1 1 auto;
+        color: white;
+        &.right {
+            display: flex;
+            flex-direction: column;
+            padding-left: 50px;
+        }
+        &.left {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            padding-right: 50px;
+        }
+        &_content:not(.info_content:first-of-type) {
+            margin: 5px 0 0 0;
+        }
+        .info_right_content {
+            font-size: 20px;
+        }
+    }
+}

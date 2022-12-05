@@ -1,0 +1,49 @@
+<div class="wraper">
+    <div class="header">
+        <div class="container">
+            <div class="poisk">
+                <input type="text" id="search" (keyup)="getSearch()">
+            </div>
+            <div class="filter">
+                <div class="p" (click)="getOrder_by(1)">Название</div>
+                <div class="p" (click)="getOrder_by(2)">Приоритет</div>
+                <div class="p" (click)="getOrder_by(3)">Скидка</div>
+            </div>
+            <div class="strela">
+                <div>
+                    >
+                </div>
+            </div>
+            <div class="sort">
+                <div class="selected">
+                    {{selected_sort}}
+                </div>
+                <div class="placeholder">
+                    <div class="cont" (click)="getSort('-')">
+                        -
+                    </div>
+                    <div class="cont" *ngFor="let type of Types" (click)="getSort(type.Title)">
+                        {{type.Title}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <div class="agents" *ngFor="let agent of MainData">
+            <div class="image">
+
+            </div>
+            <div class="info right">
+                <div class="info_content">{{agent.AgentType}} | {{agent.Title}}</div>
+                <div class="info_content">Телефон {{agent.Phone}}</div>
+                <div class="info_content">Продажи {{agent.AnnualSales}}</div>
+                <div class="info_content">Емейл {{agent.Email}}</div>
+                <div class="info_content">Приоритет {{agent.Priority}}</div>
+            </div>
+            <div class="info left">
+                <div class="info_right_content">{{agent.AnnualSalesBy}}%</div>
+            </div>
+        </div>
+    </div>
+</div>
