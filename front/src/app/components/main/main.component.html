@@ -5,9 +5,14 @@
                 <input type="text" id="search" (keyup)="getSearch()">
             </div>
             <div class="filter">
-                <div class="p" (click)="getOrder_by(1)">Название</div>
-                <div class="p" (click)="getOrder_by(2)">Приоритет</div>
-                <div class="p" (click)="getOrder_by(3)">Скидка</div>
+                <div class="selected">
+                    
+                </div>
+                <div class="placeholder">
+                    <div class="cont" (click)="getOrder_by(1)">Название</div>
+                    <div class="cont" (click)="getOrder_by(2)">Приоритет</div>
+                    <div class="cont" (click)="getOrder_by(3)">Скидка</div>
+                </div>
             </div>
             <div class="strela">
                 <div>

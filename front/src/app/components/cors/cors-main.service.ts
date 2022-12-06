@@ -15,7 +15,7 @@ export class CorsMainService {
     order?: boolean) 
     {
       const palk = "/"
-      const vopr = "?" /// !!!!!!!!!!!!!! вставь его в код!!!!!!!!
+      const vopr = "?" 
 
       let tmpType = 'type='+type;
       let tmpSearch = "&search="+search;
