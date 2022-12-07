@@ -1,6 +1,7 @@
 from fastapi import HTTPException
 
 import sqlalchemy as sa
+from sqlalchemy import select, or_
 
 from .base import Agent, AgentType, engine
 from sqlalchemy import select
@@ -44,3 +45,28 @@ def get_last_agent_id() -> int:
     if value == None:
         return 1
     return value
+
+
+def get_pages_count(filters: dict) -> int:
+    search_ = f"%{filters['search']}%"
+    type_ = filters["ag_type"]
+    
+    query = select(sa.func.count(Agent.c.ID).label("Total")).where(
+            or_(
+                (Agent.c.Title.like(search_)), 
+                (Agent.c.Phone.like(search_)),
+                (Agent.c.Email.like(search_)),
+            )
+        )
+
+    if type_ != 0:
+        type_ = get_type_by_name(type_)
+        query = query.where(Agent.c.AgentTypeID == type_)
+
+    agents_count = engine.execute(query).fetchone()[0]
+    pages_count = agents_count // 10
+
+    if agents_count % 10 > 0:
+        pages_count += 1
+
+    return pages_count

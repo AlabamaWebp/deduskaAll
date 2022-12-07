@@ -12,12 +12,12 @@ agent_router = APIRouter()
 
 
 
-@agent_router.get("/agents/types/")
+@agent_router.get("/agent/types/")
 async def types_get():
     return get_agent_types()
 
 
-@agent_router.get("/agents/{page}/")
+@agent_router.get("/agent/{page}/")
 async def agents_get(
         page: int = 1,
         type: str = "ООО",
@@ -42,6 +42,20 @@ async def agents_get(
         }
     )
 
+@agent_router.get("/agent/total_pages/")
+async def get_total_pages(
+        type: str = "ООО",
+        search: str = "%",
+    ) -> int:
+
+    return get_pages_count(
+        {
+            "search": search,
+            "ag_type": type,
+        }
+    )
+
+
 
 @agent_router.put("/agent/alter/one/")
 async def agent_alter(ag_edited: AgentBase) -> int:
@@ -55,11 +69,12 @@ async def agent_alter_multi() -> int:
 async def agent_create(agent: AgentBase) -> int:
     return base_agent_create(agent)
 
-@agent_router.post("/agent/create/uploadfile/")
-async def image_upload(agent_image: UploadFile(filename="agent_") = File(...)):
-    if agent_image.content_type not in ["image/png", "image/jpeg"]:
-        raise HTTPException(400, detail="Invalid document type")
-    return agent_image
+# @agent_router.post("/agent/create/uploadfile/")
+# async def image_upload(agent_image: UploadFile(filename="agent_") = File(...)):
+#     pass
+#     # if agent_image.content_type not in ["image/png", "image/jpeg"]:
+#     #     raise HTTPException(400, detail="Invalid document type")
+#     # return agent_image
 
 @agent_router.delete("/agent/del/")
 async def delete_agent(agent_id: int) -> bool:
