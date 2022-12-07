@@ -80,15 +80,16 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
         query = query.order_by(order.desc())
 
     query = query.offset(page*10-10).limit(10)
+
     values = engine.execute(query).fetchall()
 
     out_values = []
-
     for ag in values:
         
-        with open("data\\" + ag[8], "rb") as img_byte:
-                image_b = img_byte.read()
-                image_b = f"{image_b}"
+        image_b = ""
+        # with open("data\\" + ag[8], "rb") as img_byte:
+                # image_b = img_byte.read()
+                # image_b = f"{image_b}"
 
         return_values = AgentFull(
             ag_id  = ag[0],
@@ -107,6 +108,8 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
             ag_logo_bytes = image_b,
         )
         out_values.append(return_values)
+
+
     return out_values
 
 def base_agent_update(agent: AgentBase):
