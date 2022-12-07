@@ -27,7 +27,7 @@ export class CorsMainService {
         tmpSearch = ""
       if (!order_by)
         tmpOrder_by = ""
-      if (!order)
+      if (order == undefined)
         tmpOrder = ""
       let tmpUrl = "http://26.246.185.101:8000/agents/"+page+palk+vopr+tmpType+tmpSearch+tmpOrder_by+tmpOrder;
       if (tmpType == "" && tmpSearch == "" && tmpOrder_by == "" && tmpOrder == "") {

@@ -21,6 +21,9 @@ $border_settings: solid white 1px;
         // background-color: #fff;
         width: 100%;
         height: 100%;
+        .selected {
+            user-select: none;
+        }
         .poisk {
             width: 50%;
             height: 100%;
@@ -37,7 +40,7 @@ $border_settings: solid white 1px;
         }
         .filter {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             background-color: $black;
             border: $border_settings;
@@ -52,6 +55,7 @@ $border_settings: solid white 1px;
                 }
             }
             .placeholder {
+                z-index: 2;
                 transition: .2s;
                 pointer-events: none;
                 opacity: 0;
@@ -81,6 +85,9 @@ $border_settings: solid white 1px;
             }
         }
         .strela {
+            div {
+                font-weight: bold;
+            }
             display: flex;
             justify-content: center;
             align-items: center;
@@ -91,7 +98,12 @@ $border_settings: solid white 1px;
             width: 5%;
             height: 100%;
             div {
+                transition: .2s;
                 transform: rotate(90deg);
+                font-size: 20px;
+            }
+            .rotate {
+                transform: rotate(-90deg) !important;
             }
         }
         .sort {
@@ -138,49 +150,86 @@ $border_settings: solid white 1px;
     }
 }
 .main {
+    border-top: 1px white solid;
+    border-bottom: 1px white solid;
     width: 100%;
     height: 100%;
     padding: 20px 5%;
     box-sizing: border-box;
-}
-.agents {
-    display: flex;
-    width: 100%;
-    height: 137px;
-    border: $border_settings;
-    position: relative;
-    margin: 0 0 30px;
-    // justify-content: space-between;
-    .image {
-        height: 125px;
-        width: 200px;
-        margin: 5px;
-        border: $border_settings;
-    }
-    .info {
-        height: 100%;
-        // width: 30%;
-        padding: 10px;
-        // background-color: red;
+    overflow: hidden auto;
+    .agents {
         display: flex;
-        flex: 1 1 auto;
-        color: white;
-        &.right {
+        width: 100%;
+        height: 137px;
+        border: $border_settings;
+        position: relative;
+        margin: 0 0 30px;
+        // justify-content: space-between;
+        .image {
+            height: 125px;
+            width: 200px;
+            margin: 5px;
+            border: $border_settings;
+        }
+        .info {
+            height: 100%;
+            // width: 30%;
+            padding: 10px;
+            // background-color: red;
             display: flex;
-            flex-direction: column;
-            padding-left: 50px;
+            flex: 1 1 auto;
+            color: white;
+            &.right {
+                display: flex;
+                flex-direction: column;
+                padding-left: 50px;
+            }
+            &.left {
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                padding-right: 50px;
+            }
+            &_content:not(.info_content:first-of-type) {
+                margin: 5px 0 0 0;
+            }
+            .info_right_content {
+                font-size: 20px;
+            }
         }
-        &.left {
-            display: flex;
-            align-items: center;
-            justify-content: end;
-            padding-right: 50px;
+    }
+}
+.footer {
+    width: 100%;
+    height: 50px;
+    background-color: $black;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 50px;
+    color: white;
+    .goto {
+        // display: flex;
+        // height: 100%;
+        
+        input {
+            color: black;
+            background-color: rgb(199, 199, 199);
+            border: none;
+            width: 30px;
+            margin: 0 5px;
         }
-        &_content:not(.info_content:first-of-type) {
-            margin: 5px 0 0 0;
-        }
-        .info_right_content {
-            font-size: 20px;
+    }
+    .paginator {
+        display: flex;
+        .page_buttons {
+            margin: 0 7px;
+            cursor: pointer;
+            border: 1px solid white;
+            padding: 2px 5px;
+            &:hover {
+                background-color: $hover-color;
+            }
         }
     }
 }
