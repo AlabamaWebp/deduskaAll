@@ -2,11 +2,11 @@
     <div class="header">
         <div class="container">
             <div class="poisk">
-                <input type="text" id="search" (keyup)="getSearch()">
+                <input type="text" id="search" (keyup)="getSearch()" placeholder="Поиск">
             </div>
             <div class="filter">
                 <div class="selected">
-                    
+                    {{filter_placeholder}}
                 </div>
                 <div class="placeholder">
                     <div class="cont" (click)="getOrder_by(1)">Название</div>
@@ -14,8 +14,8 @@
                     <div class="cont" (click)="getOrder_by(3)">Скидка</div>
                 </div>
             </div>
-            <div class="strela">
-                <div>
+            <div class="strela" (click)="toggle_strela()">
+                <div id="strelochka">
                     >
                 </div>
             </div>
@@ -40,15 +40,26 @@
 
             </div>
             <div class="info right">
-                <div class="info_content">{{agent.AgentType}} | {{agent.Title}}</div>
-                <div class="info_content">Телефон {{agent.Phone}}</div>
-                <div class="info_content">Продажи {{agent.AnnualSales}}</div>
-                <div class="info_content">Емейл {{agent.Email}}</div>
-                <div class="info_content">Приоритет {{agent.Priority}}</div>
+                <div class="info_content">{{agent.ag_type}} | {{agent.ag_title}}</div>
+                <div class="info_content">Телефон {{agent.ag_phone}}</div>
+                <div class="info_content">Продажи {{agent.ag_sales}}</div>
+                <div class="info_content">Емейл {{agent.ag_email}}</div>
+                <div class="info_content">Приоритет {{agent.ag_priority}}</div>
             </div>
             <div class="info left">
-                <div class="info_right_content">{{agent.AnnualSalesBy}}%</div>
+                <div class="info_right_content">{{agent.ag_disc}}%</div>
             </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="goto">
+            <span>Перейти на страницу </span> <input type="text">
+        </div>
+        <div class="paginator">
+            <div class="page_buttons"><<</div>
+            <div class="page_buttons"><</div>
+            <div class="page_buttons">></div>
+            <div class="page_buttons">>></div>
         </div>
     </div>
 </div>

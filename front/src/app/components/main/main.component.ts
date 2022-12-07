@@ -15,6 +15,8 @@ export class MainComponent implements OnInit {
   MainData: any;
   Types: any;
   selected_sort: string = "-";
+  filter_placeholder= "Название";
+  strela_sorta = true;
   //ВЫВОД ДАННЫХ
 
   // КОРС ПЕРЕМЕННЫЕ
@@ -51,6 +53,11 @@ export class MainComponent implements OnInit {
     this.getAgents();
   }
   getOrder_by(string: number) {
+    switch (string) {
+      case 1: this.filter_placeholder = "Название"; break;
+      case 2: this.filter_placeholder = "Приоритет"; break;
+      case 3: this.filter_placeholder = "Скидка"; break;
+    }
     this.order_by = string;
     this.getAgents();
   }
@@ -61,5 +68,10 @@ export class MainComponent implements OnInit {
     this.type = undefined
     this.getAgents();
   }
-  
+  toggle_strela() {
+    this.strela_sorta = !this.strela_sorta;
+    this.order = this.strela_sorta;
+    this.getAgents();
+    document.getElementById('strelochka')?.classList.toggle('rotate');
+  }
 }
