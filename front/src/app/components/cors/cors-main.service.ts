@@ -8,6 +8,7 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class CorsMainService {
   constructor(private http: HttpClient) { }
+  url: string = "http://26.246.185.101:8000/";
   getAgent(page: string, 
     type?: string, 
     search?: string, 
@@ -29,9 +30,9 @@ export class CorsMainService {
         tmpOrder_by = ""
       if (order == undefined)
         tmpOrder = ""
-      let tmpUrl = "http://26.246.185.101:8000/agents/"+page+palk+vopr+tmpType+tmpSearch+tmpOrder_by+tmpOrder;
+      let tmpUrl = this.url + "agents/"+page+palk+vopr+tmpType+tmpSearch+tmpOrder_by+tmpOrder;
       if (tmpType == "" && tmpSearch == "" && tmpOrder_by == "" && tmpOrder == "") {
-        tmpUrl = "http://26.246.185.101:8000/agents/"+page+palk;
+        tmpUrl = this.url + "agents/"+page+palk;
       }
       // while(tmpUrl.includes("//")) {
       tmpUrl = tmpUrl.replace("?&","?");
@@ -41,7 +42,7 @@ export class CorsMainService {
       return this.http.get(tmpUrl);
   }
   getTypes() {
-    return this.http.get("http://26.246.185.101:8000/agents/types/");
+    return this.http.get(this.url + "agents/types/");
   }
 }
 export interface Agent {
