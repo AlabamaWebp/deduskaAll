@@ -1,4 +1,7 @@
+import io
 import sqlalchemy as sa
+
+from PIL import Image as pimg
 
 from fastapi import HTTPException
 
@@ -9,7 +12,7 @@ from .db.base import Agent, AgentType, Product, ProductType, ProductSale, engine
 
 from .schemas.agent import AgentBase
 from .schemas.agent import AgentFull
-from .db.base_methods import *
+from .db import base_methods as bm
 
 time_offset = 10
 
@@ -61,8 +64,14 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
             )
         )
 
-    if type_ != 0:
-        type_ = get_type_by_name(type_)
+    if type_ != "0":
+        type_ = bm.get_type_by_name(type_)
+        if type_ == None:
+            return HTTPException(
+                status_code=400,
+                detail="Invalid Value",
+                headers={"Invalid value": "Name of type is not in database"},
+            )
         query = query.where(Agent.c.AgentTypeID == type_)
 
     order = Agent.c.Title
@@ -87,9 +96,8 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
     for ag in values:
         
         image_b = ""
-        # with open("data\\" + ag[8], "rb") as img_byte:
-                # image_b = img_byte.read()
-                # image_b = f"{image_b}"
+        # with pimg.open("data\\" + ag[8]) as img:
+        #         image_b = f"{img.tobytes()}"
 
         return_values = AgentFull(
             ag_id  = ag[0],
@@ -104,7 +112,7 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
             ag_priority = ag[9],
             ag_type = ag[10],
             ag_sales = ag[11],
-            ag_disc = ag[12],
+            ag_disc = bm.recount_discount(ag[12]),
             ag_logo_bytes = image_b,
         )
         out_values.append(return_values)
@@ -113,7 +121,7 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
     return out_values
 
 def base_agent_update(agent: AgentBase):
-    type_id = get_type_by_name(agent.ag_type)
+    type_id = bm.get_type_by_name(agent.ag_type)
 
     try:
         if type_id.status_code:
@@ -136,12 +144,41 @@ def base_agent_update(agent: AgentBase):
     value = engine.execute(query)
     return value
 
+def base_agent_priority_update(ag_id: list[int], tgt_priority: int):
+    for id in ag_id:
+        if id <= 0:
+            return HTTPException(400, 
+                detail="No agents with negative or 0 ids",
+                headers={"Value error": "No agents with negative or 0 ids"}
+            )
+
+    if not len(ag_id):
+        return HTTPException(400,
+            detail="No agents in list",
+            headers={"Value error": "No selected agents"}
+        )
+
+    if not int(tgt_priority):
+        return HTTPException(400,
+            detail="Target priority is not a value",
+            headers={"Value error": "Priority is not integer"}
+        )
+    
+    if tgt_priority <= 0:
+        return HTTPException(400,
+            detail="Target priority is negative",
+            headers={"Value error": "Priority is negative"}
+        )
+
+    query = update(Agent).values(Priority = tgt_priority).where(Agent.c.ID.in_(ag_id))
+    edited = engine.execute(query).fetchall()
+    return edited
 
 def base_agent_create(agent: AgentBase):
-    type_id = get_type_by_name(agent.ag_type)
+    type_id = bm.get_type_by_name(agent.ag_type)
 
     query = insert(Agent).values(
-        ID = str(get_last_agent_id() + 1),
+        ID = str(bm.get_last_agent_id() + 1),
         Title = agent.ag_title,
         AgentTypeID = type_id,
         Address = agent.ag_address,
@@ -155,3 +192,26 @@ def base_agent_create(agent: AgentBase):
     )
     value = engine.execute(query)
     return value
+
+def base_agent_delete(agent_id: int):
+    if len(bm.get_sales_for_agent(agent_id)) == 0:
+        if bm.get_agent_by_id(agent_id) != None:
+            query = delete(Agent).where(Agent.c.ID == agent_id)
+            engine.execute(query)
+            return True
+        else:
+            return HTTPException(
+                status_code=400,
+                detail="No agent with this ID",
+                headers={
+                    "Value error": "No agent with this ID"
+                },
+            )
+    else:
+        return HTTPException(
+            status_code=202,
+            detail="This agent has sales",
+            headers={
+                "Deletion denied": "Agent has sales"
+            },
+        )

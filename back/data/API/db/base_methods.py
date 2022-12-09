@@ -2,10 +2,27 @@ from fastapi import HTTPException
 
 import sqlalchemy as sa
 from sqlalchemy import select, or_
+from sqlalchemy.engine import LegacyRow
 
-from .base import Agent, AgentType, engine
-from sqlalchemy import select
+from ..schemas.agent import AgentBase
+from .base import Agent, AgentType, ProductSale, engine
 
+def get_AgentBase_from_list(agent: list) -> AgentBase:
+    if agent == None:
+        return None
+    return AgentBase(
+            ag_id  = agent[0],
+            ag_title = agent[1],
+            ag_type = agent[2],
+            ag_address = agent[3],
+            ag_inn = agent[4],
+            ag_kpp = agent[5],
+            ag_director = agent[6],
+            ag_phone = agent[7],
+            ag_email = agent[8],
+            ag_logo_path = agent[9],
+            ag_priority = agent[10],
+        )
 
 def recount_discount(annualsales: int):
         match annualsales:
@@ -29,15 +46,11 @@ def get_agent_types() -> dict():
 
 def get_type_by_name(type_name: str) -> int:
     query = select(AgentType.c.ID).where(AgentType.c.Title == type_name)
-    value = engine.execute(query).fetchone()[0]
+    value = engine.execute(query).fetchone()
     if value == None:
-        return HTTPException(
-            detail="Invalid Value",
-            headers={"Value error": "Name of type not in database"},
-            status_code=400,
-        )
-    else:
-        return value
+        return None
+    return value[0]
+
 
 def get_last_agent_id() -> int:
     query = select(sa.func.max(Agent.c.ID))
@@ -47,9 +60,20 @@ def get_last_agent_id() -> int:
     return value
 
 
+def get_sales_for_agent(ag_id: int) -> int:
+    query = select(ProductSale).where(ProductSale.c.AgentID == ag_id)
+    sales = engine.execute(query).fetchall()
+    return sales
+
+def get_agent_by_id(ag_id: int):
+    query = select(Agent).where(Agent.c.ID == ag_id)
+    agent = engine.execute(query).fetchone()
+    return get_AgentBase_from_list(agent)
+
+
 def get_pages_count(filters: dict) -> int:
-    search_ = f"%{filters['search']}%"
     type_ = filters["ag_type"]
+    search_ = f"%{filters['search']}%"
     
     query = select(sa.func.count(Agent.c.ID).label("Total")).where(
             or_(
@@ -59,8 +83,14 @@ def get_pages_count(filters: dict) -> int:
             )
         )
 
-    if type_ != 0:
+    if type_ != "0":
         type_ = get_type_by_name(type_)
+        if type_ == None:
+            return HTTPException(
+                status_code=400,
+                detail="Invalid Value",
+                headers={"Invalid value": "Name of type is not in database"},
+            )
         query = query.where(Agent.c.AgentTypeID == type_)
 
     agents_count = engine.execute(query).fetchone()[0]
