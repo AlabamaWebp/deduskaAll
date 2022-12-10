@@ -3,7 +3,7 @@ from fastapi import HTTPException, APIRouter, UploadFile, File
 from .schemas.agent import AgentBase
 from .schemas.agent import AgentFull
 
-from .api_base import bm, base_agents_select, base_agent_create, base_agent_update, base_agent_delete, base_agent_priority_update
+from .api_base_agent import bm, base_agents_select, base_agent_create, base_agent_update, base_agent_delete, base_agent_priority_update
 
 
 agent_router = APIRouter()
@@ -55,8 +55,8 @@ async def agent_alter(ag_edited: AgentBase) -> int:
     return base_agent_update(ag_edited)
 
 @agent_router.put("/agent/edit/multi/")
-async def agent_alter_multi(ag_id: list[int], value: int) -> int:
-    return base_agent_priority_update(ag_id, value)
+async def agent_alter_multi(ag_id: list[int], priority: int) -> int:
+    return base_agent_priority_update(ag_id, priority)
 
 @agent_router.post("/agent/create/")
 async def agent_create(agent: AgentBase) -> int:

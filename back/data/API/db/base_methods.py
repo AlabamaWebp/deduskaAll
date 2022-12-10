@@ -5,7 +5,7 @@ from sqlalchemy import select, or_
 from sqlalchemy.engine import LegacyRow
 
 from ..schemas.agent import AgentBase
-from .base import Agent, AgentType, ProductSale, engine
+from .base import Agent, AgentType,Product, ProductType, ProductSale, engine
 
 def get_AgentBase_from_list(agent: list) -> AgentBase:
     if agent == None:
@@ -23,6 +23,7 @@ def get_AgentBase_from_list(agent: list) -> AgentBase:
             ag_logo_path = agent[9],
             ag_priority = agent[10],
         )
+
 
 def recount_discount(annualsales: int):
         match annualsales:
@@ -44,7 +45,7 @@ def get_agent_types() -> dict():
     return values
 
 
-def get_type_by_name(type_name: str) -> int:
+def get_agent_type_id_by_name(type_name: str) -> int:
     query = select(AgentType.c.ID).where(AgentType.c.Title == type_name)
     value = engine.execute(query).fetchone()
     if value == None:
@@ -65,6 +66,7 @@ def get_sales_for_agent(ag_id: int) -> int:
     sales = engine.execute(query).fetchall()
     return sales
 
+
 def get_agent_by_id(ag_id: int):
     query = select(Agent).where(Agent.c.ID == ag_id)
     agent = engine.execute(query).fetchone()
@@ -84,7 +86,7 @@ def get_pages_count(filters: dict) -> int:
         )
 
     if type_ != "0":
-        type_ = get_type_by_name(type_)
+        type_ = get_agent_type_id_by_name(type_)
         if type_ == None:
             return HTTPException(
                 status_code=400,
@@ -100,3 +102,15 @@ def get_pages_count(filters: dict) -> int:
         pages_count += 1
 
     return pages_count
+
+
+def get_product_types() -> dict:
+    query = select(ProductType.c.ID, ProductType.c.Title)
+    types = engine.execute(query).fetchall()
+    return types
+
+
+def get_product_type_id_by_name(name):
+    query = select(ProductType.c.ID).where(ProductType.c.Title == name)
+    value = engine.execute(query).fetchone()
+    return value
