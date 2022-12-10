@@ -3,15 +3,15 @@ from pydantic import typing
 
 class AgentBase(BaseModel):
     ag_id: int = 0
-    ag_title: str = "title"
+    ag_title: str = ""
     ag_priority: int = 0
-    ag_type: str = "ООО"
-    ag_address: str = "address"
-    ag_director: str = "director"
-    ag_email: str = "email"
-    ag_phone: str = "11123456789"
-    ag_inn: str = "1123456789"
-    ag_kpp: str = "123456789"
+    ag_type: str = ""
+    ag_address: str = ""
+    ag_director: str = ""
+    ag_email: str = ""
+    ag_phone: str = ""
+    ag_inn: str = ""
+    ag_kpp: str = ""
     ag_logo_path: str = "\\agents\\no_image.png"
 
     @validator("ag_title")
@@ -39,8 +39,7 @@ class AgentBase(BaseModel):
             raise ValueError("КПП должен быть из 9 цифр")
         return v
 
-
 class AgentFull(AgentBase):
     ag_sales: int = 0
     ag_disc: int = 0
-    ag_logo_bytes: typing.Any = ""
+    ag_image_byte: typing.Any = ""

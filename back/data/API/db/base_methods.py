@@ -1,4 +1,7 @@
-from fastapi import HTTPException
+import os
+import datetime
+
+from fastapi import HTTPException, File
 
 import sqlalchemy as sa
 from sqlalchemy import select, or_
@@ -6,6 +9,7 @@ from sqlalchemy.engine import LegacyRow
 
 from ..schemas.agent import AgentBase
 from .base import Agent, AgentType,Product, ProductType, ProductSale, engine
+from ...settings import directory
 
 def get_AgentBase_from_list(agent: list) -> AgentBase:
     if agent == None:
@@ -114,3 +118,23 @@ def get_product_type_id_by_name(name):
     query = select(ProductType.c.ID).where(ProductType.c.Title == name)
     value = engine.execute(query).fetchone()
     return value
+
+
+def save_file_in_folder(file: File, file_format: str):
+    save_dir = directory+"\\data\\agents\\"
+    now = datetime.datetime.now()
+    dtm = now.strftime("%d-%B-%Y %H-%M-%S-%f")
+    filename = f"{dtm}.{file_format}"
+    try:
+        with open(os.path.join(save_dir, filename), 'wb') as f:
+            while contents := file.file.read(1024 * 1024):
+                f.write(contents)
+    except Exception as e:
+        return {
+            "message": "There was an error uploading the file",
+            "values": [save_dir, now, dtm, filename]
+        }
+    finally:
+        file.file.close()
+
+    return [file.filename, filename]

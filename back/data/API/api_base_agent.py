@@ -113,7 +113,7 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
             ag_type = ag[10],
             ag_sales = ag[11],
             ag_disc = bm.recount_discount(ag[12]),
-            ag_logo_bytes = image_b,
+            ag_image_byte = image_b,
         )
         out_values.append(return_values)
 
