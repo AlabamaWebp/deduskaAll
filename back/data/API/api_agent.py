@@ -1,11 +1,9 @@
-import os
-
-from fastapi import APIRouter, UploadFile, File
+from fastapi import HTTPException, APIRouter, UploadFile, File
 
 from .schemas.agent import AgentBase
 from .schemas.agent import AgentFull
 
-from .api_base import *
+from .api_base_agent import bm, base_agents_select, base_agent_create, base_agent_update, base_agent_delete, base_agent_priority_update
 
 
 agent_router = APIRouter()
@@ -14,13 +12,23 @@ agent_router = APIRouter()
 
 @agent_router.get("/agent/types/")
 async def types_get():
-    return get_agent_types()
+    return bm.get_agent_types()
 
+@agent_router.get("/agent/pages/")
+async def get_total_pages(
+        type_: str = "0",
+        search: str = "%",
+    ) -> int:
+
+    return bm.get_pages_count({
+        "search": search,
+        "ag_type": type_
+    })
 
 @agent_router.get("/agent/{page}/")
 async def agents_get(
         page: int = 1,
-        type: str = "ООО",
+        type_: str = "0",
         search: str = "%",
         order_by: int = 1,
         order: bool = True,
@@ -36,34 +44,19 @@ async def agents_get(
     return base_agents_select(page, 
         {
             "search": search,
-            "ag_type": type,
+            "ag_type": type_,
             "order": order,
             "order_by": order_by,
         }
     )
 
-@agent_router.get("/agent/total_pages/")
-async def get_total_pages(
-        type: str = "ООО",
-        search: str = "%",
-    ) -> int:
-
-    return get_pages_count(
-        {
-            "search": search,
-            "ag_type": type,
-        }
-    )
-
-
-
-@agent_router.put("/agent/alter/one/")
+@agent_router.put("/agent/edit/one/")
 async def agent_alter(ag_edited: AgentBase) -> int:
     return base_agent_update(ag_edited)
 
-@agent_router.put("/agent/alter/multi/")
-async def agent_alter_multi() -> int:
-    return None
+@agent_router.put("/agent/edit/multi/")
+async def agent_alter_multi(ag_id: list[int], priority: int) -> int:
+    return base_agent_priority_update(ag_id, priority)
 
 @agent_router.post("/agent/create/")
 async def agent_create(agent: AgentBase) -> int:
@@ -78,4 +71,4 @@ async def agent_create(agent: AgentBase) -> int:
 
 @agent_router.delete("/agent/del/")
 async def delete_agent(agent_id: int) -> bool:
-    return None
+    return base_agent_delete(agent_id)
