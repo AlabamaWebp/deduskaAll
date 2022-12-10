@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Agent, CorsMainService } from '../cors/cors-main.service';
+// Agent,
+import { CorsMainService } from '../cors/cors-main.service';
 
 
 @Component({
@@ -10,11 +11,14 @@ import { Agent, CorsMainService } from '../cors/cors-main.service';
 export class MainComponent implements OnInit {
 
   constructor(private CorsMainService: CorsMainService) { }
+  // Модальные окна
+  modal_create = true;
+  // Модальные окна
 
   //ВЫВОД ДАННЫХ
   MainData: any;
   Types: any;
-  selected_sort: string = "-";
+  selected_sort: string = "Без фильтра";
   filter_placeholder = "Название";
   strela_sorta = true;
   max_page: number = 2;
@@ -33,16 +37,18 @@ export class MainComponent implements OnInit {
     this.getTypes();
   }
   getTypes() {
-    this.CorsMainService.getTypes().subscribe((data: Agent) => {
+    this.CorsMainService.getTypes().subscribe((data) => {
       this.Types = data;
     });
   }
 
   getAgents() {
-    this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data: Agent) => {
+    this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data) => {
       this.MainData = data;
-      // console.log(this.MainData)
     });
+    this.CorsMainService.getMaxPage(this.type, this.search).subscribe((data) => {
+      this.max_page = Number(data);
+    })
   }
   getSearch() {
     //@ts-ignore
@@ -71,7 +77,7 @@ export class MainComponent implements OnInit {
   getSort(string: string) {
     this.selected_sort = string;
     this.type = string
-    if (string == "-")
+    if (string == "Без фильтра")
       this.type = undefined
     this.getAgents();
   }
@@ -115,7 +121,6 @@ export class MainComponent implements OnInit {
   }
   goto_func(event: any) {
     const value = Number(event.target.value)
-    console.log(this.page, event.target)
     if (this.page > this.max_page) {
       this.page = this.max_page;
     }

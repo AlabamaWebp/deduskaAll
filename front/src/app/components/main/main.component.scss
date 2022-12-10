@@ -21,14 +21,16 @@ $border_settings: solid white 1px;
         // background-color: #fff;
         width: 100%;
         height: 100%;
+        justify-content: space-between;
         .selected {
             user-select: none;
         }
         .poisk {
-            width: 50%;
+            flex: 15 1 auto;
+            // width: 50%;
             height: 100%;
             // background-color: red;
-            margin: 0 5% 0 0;
+            margin: 0 1% 0 0;
             input {
                 width: 100%;
                 height: 100%;
@@ -39,13 +41,14 @@ $border_settings: solid white 1px;
             }
         }
         .filter {
+            flex: 5 1 auto;
             display: flex;
             justify-content: center;
             align-items: center;
             background-color: $black;
             border: $border_settings;
             color: white;
-            width: 20%;
+            // width: 20%;
             height: 100%;
             position: relative;
              &:hover {
@@ -85,6 +88,9 @@ $border_settings: solid white 1px;
             }
         }
         .strela {
+            // flex: 1 1 auto;
+            padding: 0 15px;
+            margin: 0 1% 0 0;
             div {
                 font-weight: bold;
             }
@@ -95,7 +101,7 @@ $border_settings: solid white 1px;
             background-color: $black;
             border: $border_settings;
             color: white;
-            width: 5%;
+            // width: 5%;
             height: 100%;
             div {
                 transition: .2s;
@@ -107,6 +113,7 @@ $border_settings: solid white 1px;
             }
         }
         .sort {
+            flex: 5 1 auto;
             z-index: 2;
             display: flex;
             justify-content: center;
@@ -114,9 +121,7 @@ $border_settings: solid white 1px;
             background-color: $black;
             border: $border_settings;
             color: white;
-            width: 15%;
             height: 100%;
-            margin: 0 0 0 5%;
             position: relative;
             transition: .2s;
             &:hover {
@@ -145,6 +150,26 @@ $border_settings: solid white 1px;
                         background-color: $hover-color;
                     }
                 }   
+            }
+        }
+        .create {
+            border: $border_settings;
+            height: 100%;
+            padding: 0 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            cursor: pointer;
+            margin: 0 0 0 5%;
+            border: solid green 1px;
+            transition: .2s;
+            text-shadow: 1px 1px 10px rgb(0, 255, 0);
+            // background-color: white;
+            &:hover {
+                background-color: $hover-color;
+                border: solid white 1px;
+                // transform: rotate(1200deg);
             }
         }
     }
@@ -223,6 +248,7 @@ $border_settings: solid white 1px;
     .paginator {
         display: flex;
         .page_buttons {
+            user-select: none;
             margin: 0 7px;
             cursor: pointer;
             border: 1px solid white;

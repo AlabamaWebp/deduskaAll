@@ -24,13 +24,16 @@
                     {{selected_sort}}
                 </div>
                 <div class="placeholder">
-                    <div class="cont" (click)="getSort('-')">
-                        -
+                    <div class="cont" (click)="getSort('Без фильтра')">
+                        Без фильтра
                     </div>
                     <div class="cont" *ngFor="let type of Types" (click)="getSort(type.Title)">
                         {{type.Title}}
                     </div>
                 </div>
+            </div>
+            <div class="create" (click)="modal_create = true">
+                Создать запись
             </div>
         </div>
     </div>
@@ -53,7 +56,8 @@
     </div>
     <div class="footer">
         <div class="goto">
-            <span>Перейти на страницу</span> <input type="number" (keypress)="goto_func($event)">
+            <!-- <span>Перейти на страницу</span> <input type="number" (keypress)="goto_func($event)"> -->
+            Вы на {{page}} странице из {{max_page}}
         </div>
         <div class="paginator">
             <div class="page_buttons" (click)="paginator(1)"><<</div>
@@ -63,3 +67,7 @@
         </div>
     </div>
 </div>
+<app-create 
+    *ngIf="modal_create"
+    (close)="modal_create = false"
+></app-create>

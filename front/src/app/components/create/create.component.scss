@@ -1,0 +1,45 @@
+$backcolor: #2d2929;
+$frontcolor: white;
+.backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 3;
+}
+.create {
+    z-index: 3;
+    position: absolute;
+    padding: 1rem;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $backcolor;
+    color: white;
+    // width: 50%;
+    .container {
+        h2 {
+            text-align: center;
+        }
+        &_create {
+            span {
+                margin: 0 1rem 0 0;
+            }
+            input {
+                color: $frontcolor;
+                border: 1px solid $frontcolor;
+                background-color: $backcolor;
+            }
+        }
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0 0;
+            button {
+                background-color: $backcolor;
+            }
+        }
+    }
+}
