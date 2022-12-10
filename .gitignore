@@ -1,0 +1,5 @@
+/back/venv
+/back/data/__pycache__
+/back/data/API/__pycache__
+/back/data/API/db/__pycache__
+/back/data/API/schemas/__pycache__
