@@ -42,3 +42,7 @@ async def debug_upload_file(file: UploadFile = File(...)):
                     "File error": f"Current file format({file_format}) not in whitelist"
                 },
             )
+
+@debug_router.get("/debug/getFile/")
+async def debug_get_file(file_path = "/agents/agent_1.png"):
+    return bm.get_file_from_db(file_path)

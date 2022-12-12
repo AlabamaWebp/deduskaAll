@@ -1,7 +1,7 @@
 from pydantic import BaseModel, validator
 from pydantic import typing
 
-class AgentBase(BaseModel):
+class AgentMain(BaseModel):
     ag_id: int = 0
     ag_title: str = ""
     ag_priority: int = 0
@@ -12,7 +12,7 @@ class AgentBase(BaseModel):
     ag_phone: str = ""
     ag_inn: str = ""
     ag_kpp: str = ""
-    ag_logo_path: str = "\\agents\\no_image.png"
+
 
     @validator("ag_title")
     def title_valid(cls, v):
@@ -39,7 +39,13 @@ class AgentBase(BaseModel):
             raise ValueError("КПП должен быть из 9 цифр")
         return v
 
-class AgentFull(AgentBase):
+class AgentGet(AgentMain):
     ag_sales: int = 0
     ag_disc: int = 0
     ag_image_byte: typing.Any = ""
+
+class AgentPost(AgentMain):
+    ag_is_no_logo: bool = True
+
+class AgentPostDB(AgentPost):
+    ag_logo_path: str = "\\agents\\no_image.png"
