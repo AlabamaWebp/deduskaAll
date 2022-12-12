@@ -12,7 +12,7 @@ $frontcolor: white;
 .create {
     z-index: 3;
     position: absolute;
-    padding: 1rem;
+    padding: 1rem 3rem 2rem;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
@@ -24,8 +24,12 @@ $frontcolor: white;
             text-align: center;
         }
         &_create {
+            margin: 0 0 1rem 0;
+            display: flex;
             span {
                 margin: 0 1rem 0 0;
+                width: 200px;
+                display: inline-block;
             }
             input {
                 color: $frontcolor;

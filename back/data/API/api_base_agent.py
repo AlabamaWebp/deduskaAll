@@ -214,3 +214,4 @@ def base_agent_delete(agent_id: int):
                 "Deletion denied": "Agent has sales"
             },
         )
+    

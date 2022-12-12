@@ -57,6 +57,10 @@ export class CorsMainService {
       return this.http.get(tmpUrl);
     }
   }
+  postCreate() {
+    // /agent/create/
+    return this.http.get(this.url + "agent/create/");
+  }
 }
 // export interface Agent {
   
