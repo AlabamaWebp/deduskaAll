@@ -83,6 +83,9 @@ export class CorsMainService {
     }
     return this.http.post(this.url + "agent/create/", body);
   }
+  deleteAg(id: string) {
+    return this.http.delete(this.url + "agent/del/" + '?agent_id='+id);
+  }
 }
 // export interface Agent {
   

@@ -12,7 +12,7 @@ export class MainComponent implements OnInit {
 
   constructor(private CorsMainService: CorsMainService) { }
   // Модальные окна
-  modal_create = true;
+  modal_create = false;
   // Модальные окна
 
   //ВЫВОД ДАННЫХ
@@ -128,6 +128,10 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       event.target.value = this.page;
     }, 1000);
+    this.getAgents();
+  }
+  delete(id: string) {
+    this.CorsMainService.deleteAg(id).subscribe(() => {});
     this.getAgents();
   }
 }

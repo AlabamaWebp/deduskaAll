@@ -51,6 +51,10 @@
             </div>
             <div class="info left">
                 <div class="info_right_content">{{agent.ag_disc}}%</div>
+                <div class="buttons">
+                    <button class="edit">Редактировать</button>
+                    <button class="delete" (click)="delete(agent.ag_id)">Удалить</button>
+                </div>
             </div>
         </div>
     </div>
