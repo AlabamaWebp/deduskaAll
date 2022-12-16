@@ -38,7 +38,8 @@ export class CreateComponent implements OnInit {
       !inn ||
       !kpp ||
       !logo) {
-        alert("ПОЖАЛУЙСТА ВВЕДИ ВСЁ РАДИ БОЖЕ")
+        alert("ПОЖАЛУЙСТА ВВЕДИ ВСЁ РАДИ БОЖЕ");
+        return;
       }
     this.cors.postCreate(title,
       priority, 
