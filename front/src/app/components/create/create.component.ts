@@ -57,6 +57,5 @@ export class CreateComponent implements OnInit {
          this.err_modal = true; 
         }
       )
-    // this.cors.postCreate('title', '333', 'ООО', 'address', 'director', 'email', '11123456789', '1123456789', '123456789', '\agents\no_image.png').subscribe((b) => {return 1});
   }
 }

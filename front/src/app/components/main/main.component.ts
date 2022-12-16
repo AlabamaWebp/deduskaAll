@@ -13,6 +13,7 @@ export class MainComponent implements OnInit {
   constructor(private CorsMainService: CorsMainService) { }
   // Модальные окна
   modal_create = false;
+  modal_edit = true;
   // Модальные окна
 
   //ВЫВОД ДАННЫХ

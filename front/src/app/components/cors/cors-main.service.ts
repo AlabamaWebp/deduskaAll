@@ -86,6 +86,34 @@ export class CorsMainService {
   deleteAg(id: string) {
     return this.http.delete(this.url + "agent/del/" + '?agent_id='+id);
   }
+  putEdit(id:string, 
+    title: string,
+    priority: string,
+    type: string,
+    address: string,
+    director: string,
+    email: string,
+    phone: string,
+    inn: string,
+    kpp: string,
+    logo: string)   
+    {
+    const body = {
+      
+      ag_id: id,
+      ag_title: title,
+      ag_priority: priority,
+      ag_type: type,
+      ag_address: address,
+      ag_director: director,
+      ag_email: email,
+      ag_phone: phone,
+      ag_inn: inn,
+      ag_kpp: kpp,
+      ag_logo_path: logo
+    }
+    return this.http.put(this.url + "agent/edit/one/", body);
+  }
 }
 // export interface Agent {
   
