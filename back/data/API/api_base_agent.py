@@ -1,5 +1,5 @@
 import io
-from PIL import Image as pimg
+# from PIL import Image as pimg
 
 import sqlalchemy as sa
 

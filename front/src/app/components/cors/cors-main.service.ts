@@ -8,8 +8,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class CorsMainService {
   constructor(private http: HttpClient) { }
-  url: string = "http://26.246.185.101:8000/";
-  // url: string = "http://127.0.0.1:8000/";
+  // url: string = "http://26.246.185.101:8000/";
+  url: string = "http://127.0.0.1:8000/";
   getAgent(page: string, 
     type?: string, 
     search?: string, 
@@ -36,7 +36,6 @@ export class CorsMainService {
         tmpUrl = this.url + "agent/"+page+palk;
       }
       tmpUrl = tmpUrl.replace("?&","?");
-      console.log(tmpUrl)
       return this.http.get(tmpUrl);
   }
   getTypes() {
@@ -57,9 +56,32 @@ export class CorsMainService {
       return this.http.get(tmpUrl);
     }
   }
-  postCreate() {
-    // /agent/create/
-    return this.http.get(this.url + "agent/create/");
+  postCreate(title: string,
+    priority: string,
+    type: string,
+    address: string,
+    director: string,
+    email: string,
+    phone: string,
+    inn: string,
+    kpp: string,
+    logo: string)   
+    {
+    const body = {
+      
+      ag_id: 0,
+      ag_title: title,
+      ag_priority: priority,
+      ag_type: type,
+      ag_address: address,
+      ag_director: director,
+      ag_email: email,
+      ag_phone: phone,
+      ag_inn: inn,
+      ag_kpp: kpp,
+      ag_logo_path: logo
+    }
+    return this.http.post(this.url + "agent/create/", body);
   }
 }
 // export interface Agent {

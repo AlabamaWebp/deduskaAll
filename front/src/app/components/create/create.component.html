@@ -39,3 +39,8 @@
         </div>
     </div>
 </div>
+<div class="backdrop backdrop2" *ngIf="err_modal" (click)="err_modal = false"></div>
+<div class="error" *ngIf="err_modal">
+    <p *ngFor="let err of errors">{{err.msg}}</p>
+    <button (click)="err_modal = false">ok</button>
+</div>
