@@ -1,1 +1,46 @@
-<p>edit works!</p>
+<div class="backdrop"></div>
+<div class="create">
+    <div class="container">
+        <h2>Редактирование записи</h2>
+
+        <div class="container_create">
+            <span>Название</span> <input type="text" #title> 
+        </div>
+        <div class="container_create">
+            <span>Приоритет</span> <input type="number" #priority> 
+        </div>
+        <div class="container_create">
+            <span>Тип</span> <input type="text" #type> 
+        </div>
+        <div class="container_create">
+            <span>Адрес</span> <input type="text" #address> 
+        </div>
+        <div class="container_create">
+            <span>Директор</span> <input type="text" #director> 
+        </div>
+        <div class="container_create">
+            <span>Емейл</span> <input type="text" #email> 
+        </div>
+        <div class="container_create">
+            <span>Телефон</span> <input type="number" #telephone> 
+        </div>
+        <div class="container_create">
+            <span>ИНН</span> <input type="number" #inn> 
+        </div>
+        <div class="container_create">
+            <span>КПП</span> <input type="number" #kpp> 
+        </div>
+        <div class="container_create">
+            <span>Лого</span> <input type="text" #logo> 
+        </div>
+        <div class="footer">
+            <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="edit_func(title.id, title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Создать</button>
+            <button (click)="close.emit()" style="background-color: rgba(255, 0, 0, 0.3);">Закрыть</button>
+        </div>
+    </div>
+</div>
+<div class="backdrop backdrop2" *ngIf="err_modal" (click)="err_modal = false"></div>
+<div class="error" *ngIf="err_modal">
+    <p *ngFor="let err of errors">{{err.msg}}</p>
+    <button (click)="err_modal = false">ok</button>
+</div>
