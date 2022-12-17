@@ -183,6 +183,9 @@ def save_file_in_folder(file: File, file_format: str) -> str:
 
 def get_file_from_db(file_path: str) -> File:
     file = File
-    with open(directory+"/data"+file_path, encoding="utf-8", errors="ignore") as op_file:
-        file = op_file.read()
+    try:
+        with open(directory+"/data"+file_path, encoding="utf-8", errors="ignore") as op_file:
+            file = op_file.read()
+    except:
+        file = open(directory+"/data/agents/no_image.png", encoding="utf-8", errors="ignore")
     return file

@@ -86,16 +86,16 @@ export class CorsMainService {
   deleteAg(id: string) {
     return this.http.delete(this.url + "agent/del/" + '?agent_id='+id);
   }
-  putEdit(id:string, 
+  putEdit(id:number, 
     title: string,
-    priority: string,
+    priority: number,
     type: string,
     address: string,
     director: string,
     email: string,
-    phone: string,
-    inn: string,
-    kpp: string,
+    phone: number,
+    inn: number,
+    kpp: number,
     logo: string)   
     {
     const body = {

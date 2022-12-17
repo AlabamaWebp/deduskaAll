@@ -4,37 +4,37 @@
         <h2>Редактирование записи</h2>
 
         <div class="container_create">
-            <span>Название</span> <input type="text" #title> 
+            <span>Название</span> <input type="text" #title [value]="ag_title"> 
         </div>
         <div class="container_create">
-            <span>Приоритет</span> <input type="number" #priority> 
+            <span>Приоритет</span> <input type="number" #priority [value]="ag_priority"> 
         </div>
         <div class="container_create">
-            <span>Тип</span> <input type="text" #type> 
+            <span>Тип</span> <input type="text" #type [value]="ag_type"> 
         </div>
         <div class="container_create">
-            <span>Адрес</span> <input type="text" #address> 
+            <span>Адрес</span> <input type="text" #address [value]="ag_address"> 
         </div>
         <div class="container_create">
-            <span>Директор</span> <input type="text" #director> 
+            <span>Директор</span> <input type="text" #director [value]="ag_director"> 
         </div>
         <div class="container_create">
-            <span>Емейл</span> <input type="text" #email> 
+            <span>Емейл</span> <input type="text" #email [value]="ag_email"> 
         </div>
         <div class="container_create">
-            <span>Телефон</span> <input type="number" #telephone> 
+            <span>Телефон</span> <input type="number" #telephone [value]="ag_phone"> 
         </div>
         <div class="container_create">
-            <span>ИНН</span> <input type="number" #inn> 
+            <span>ИНН</span> <input type="number" #inn [value]="ag_inn"> 
         </div>
         <div class="container_create">
-            <span>КПП</span> <input type="number" #kpp> 
+            <span>КПП</span> <input type="number" #kpp [value]="ag_kpp"> 
         </div>
         <div class="container_create">
-            <span>Лого</span> <input type="text" #logo> 
+            <span>Лого</span> <input type="text" #logo [value]="ag_logo"> 
         </div>
         <div class="footer">
-            <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="edit_func(title.id, title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Создать</button>
+            <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="edit_func(title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Создать</button>
             <button (click)="close.emit()" style="background-color: rgba(255, 0, 0, 0.3);">Закрыть</button>
         </div>
     </div>

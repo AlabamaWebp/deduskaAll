@@ -93,8 +93,10 @@ def base_agents_select(page: int, filters: dict) -> list[AgentGet]:
 
     out_values = []
     for ag in values:
-        
-        image_b = bm.get_file_from_db(ag[8])
+        if ag[8] == None:
+            image_b = ""
+        else:
+            image_b = bm.get_file_from_db(ag[8])
 
         return_values = AgentGet(
             ag_id  = ag[0],

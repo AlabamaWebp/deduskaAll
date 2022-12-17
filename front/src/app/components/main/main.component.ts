@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 // Agent,
 import { CorsMainService } from '../cors/cors-main.service';
+import { EditComponent } from '../edit/edit.component';
 
 
 @Component({
@@ -11,9 +12,39 @@ import { CorsMainService } from '../cors/cors-main.service';
 export class MainComponent implements OnInit {
 
   constructor(private CorsMainService: CorsMainService) { }
+  // perem ag
+  ag_id: string | undefined;
+  ag_title: string | undefined;
+  ag_priority: string | undefined;
+  ag_type: string | undefined;
+  ag_address: string | undefined;
+  ag_director: string | undefined;
+  ag_email: string | undefined;
+  ag_phone: string | undefined;
+  ag_inn: string | undefined;
+  ag_kpp: string | undefined;
+  ag_logo_path: string | undefined;
+  // perem ag
+
+
+  ag_edit(list: any) {
+      this.ag_id = list.ag_id,
+      this.ag_title = list.ag_title,
+      this.ag_priority = list.ag_priority,
+      this.ag_type = list.ag_type,
+      this.ag_address = list.ag_address,
+      this.ag_director = list.ag_director,
+      this.ag_email = list.ag_email,
+      this.ag_phone = list.ag_phone,
+      this.ag_inn = list.ag_inn,
+      this.ag_kpp = list.ag_kpp,
+      this.ag_logo_path = list.ag_logo_path
+      this.modal_edit = true
+  }
+
   // Модальные окна
   modal_create = false;
-  modal_edit = true;
+  modal_edit = false;
   // Модальные окна
 
   //ВЫВОД ДАННЫХ
@@ -46,7 +77,7 @@ export class MainComponent implements OnInit {
   getAgents() {
     this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data) => {
       this.MainData = data;
-    });
+    }, (err) => {console.log(err)});
     this.CorsMainService.getMaxPage(this.type, this.search).subscribe((data) => {
       this.max_page = Number(data);
     })
