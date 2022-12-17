@@ -3,20 +3,19 @@ import io
 
 import sqlalchemy as sa
 
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 
 from sqlalchemy import select, delete, update, insert
 from sqlalchemy import or_, and_
 from sqlalchemy.sql import func
 from .db.base import Agent, AgentType, Product, ProductSale, engine
 
-from .schemas.agent import AgentBase
-from .schemas.agent import AgentFull
+from .schemas.agent import AgentGet, AgentPostDB
 from .db import base_methods as bm
 
-time_offset = 10
+from ..settings import whitelist_image_formats, time_offset
 
-def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
+def base_agents_select(page: int, filters: dict) -> list[AgentGet]:
 
     search_ = f"%{filters['search']}%"
     type_ = filters["ag_type"]
@@ -95,11 +94,9 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
     out_values = []
     for ag in values:
         
-        image_b = ""
-        # with pimg.open("data\\" + ag[8]) as img:
-        #         image_b = f"{img.tobytes()}"
+        image_b = bm.get_file_from_db(ag[8])
 
-        return_values = AgentFull(
+        return_values = AgentGet(
             ag_id  = ag[0],
             ag_title = ag[1],
             ag_director = ag[2],
@@ -108,18 +105,18 @@ def base_agents_select(page: int, filters: dict) -> list[AgentFull]:
             ag_inn = ag[5],
             ag_kpp = ag[6],
             ag_email = ag[7],
-            ag_logo_path = ag[8],
+            # ag_logo_path = ag[8],
             ag_priority = ag[9],
             ag_type = ag[10],
             ag_sales = ag[11],
             ag_disc = bm.recount_discount(ag[12]),
-            ag_logo_bytes = image_b,
+            ag_image_byte = image_b,
         )
         out_values.append(return_values)
 
     return out_values
 
-def base_agent_update(agent: AgentBase):
+def base_agent_update(agent: AgentGet):
     type_id = bm.get_agent_type_id_by_name(agent.ag_type)
 
     try:
@@ -137,7 +134,7 @@ def base_agent_update(agent: AgentBase):
         DirectorName = agent.ag_director,
         Phone = agent.ag_phone,
         Email = agent.ag_email,
-        Logo = agent.ag_logo_path,
+        # Logo = agent.ag_logo_path,
         Priority = agent.ag_priority,
     ).where(Agent.c.ID == agent.ag_id)
     value = engine.execute(query)
@@ -173,8 +170,23 @@ def base_agent_priority_update(ag_id: list[int], tgt_priority: int):
     edited = engine.execute(query).fetchall()
     return edited
 
-def base_agent_create(agent: AgentBase):
+def base_agent_create(agent: AgentPostDB, uploaded_file: UploadFile):
     type_id = bm.get_agent_type_id_by_name(agent.ag_type)
+
+    if not agent.ag_is_no_logo:
+        file_format = uploaded_file.filename.split(".")[-1]
+        if file_format in whitelist_image_formats:
+            filepath = bm.save_file_in_folder(uploaded_file, file_format)
+        else:
+            return HTTPException(
+                    status_code=400,
+                    detail="Invalid file format",
+                    headers={
+                        "File error": f"Current file format({file_format}) not in whitelist"
+                    },
+                )
+    else:
+        filepath = "/agents/no_logo.png"
 
     query = insert(Agent).values(
         ID = str(bm.get_last_agent_id() + 1),
@@ -186,7 +198,7 @@ def base_agent_create(agent: AgentBase):
         DirectorName = agent.ag_director,
         Phone = agent.ag_phone,
         Email = agent.ag_email,
-        Logo = agent.ag_logo_path,
+        Logo = filepath,
         Priority = agent.ag_priority,
     )
     value = engine.execute(query)

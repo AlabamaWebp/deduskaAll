@@ -1,8 +1,5 @@
 from fastapi import HTTPException, APIRouter, UploadFile, File
 
-from .schemas.agent import AgentBase
-from .schemas.agent import AgentFull
-
 from .api_base_agent import bm
 from .api_base_product import get_product_sales_for_agent
 

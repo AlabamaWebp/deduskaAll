@@ -1,7 +1,6 @@
 from fastapi import HTTPException, APIRouter, UploadFile, File
 
-from .schemas.agent import AgentBase
-from .schemas.agent import AgentFull
+from .schemas.agent import AgentMain, AgentGet, AgentPost
 
 from .api_base_agent import bm, base_agents_select, base_agent_create, base_agent_update, base_agent_delete, base_agent_priority_update
 
@@ -32,7 +31,7 @@ async def agents_get(
         search: str = "%",
         order_by: int = 1,
         order: bool = True,
-    ) -> list[AgentFull]:
+    ) -> list[AgentGet]:
 
     if page < 1:
         return HTTPException(
@@ -51,7 +50,7 @@ async def agents_get(
     )
 
 @agent_router.put("/agent/edit/one/")
-async def agent_alter(ag_edited: AgentBase) -> int:
+async def agent_alter(ag_edited: AgentMain) -> int:
     return base_agent_update(ag_edited)
 
 @agent_router.put("/agent/edit/multi/")
@@ -59,8 +58,11 @@ async def agent_alter_multi(ag_id: list[int], priority: int) -> int:
     return base_agent_priority_update(ag_id, priority)
 
 @agent_router.post("/agent/create/")
-async def agent_create(agent: AgentBase) -> int:
-    return base_agent_create(agent)
+async def agent_create(
+        agent: AgentPost,
+        file: UploadFile = File(...),
+    ) -> int:
+    return base_agent_create(agent, file)
 
 # @agent_router.post("/agent/create/uploadfile/")
 # async def image_upload(agent_image: UploadFile(filename="agent_") = File(...)):
