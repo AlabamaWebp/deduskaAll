@@ -1,1 +1,1 @@
-conn_string = "mssql://:@DESKTOP-GL4ISM2/test?driver=ODBC+Driver+17+for+SQL+Server"
+conn_string = "mssql://:@LAPTOP-TK7JKUOV/test?driver=ODBC+Driver+17+for+SQL+Server"
