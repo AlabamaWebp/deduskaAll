@@ -39,7 +39,7 @@ export class MainComponent implements OnInit {
       this.ag_phone = list.ag_phone,
       this.ag_inn = list.ag_inn,
       this.ag_kpp = list.ag_kpp,
-      this.ag_image = list.ag_image
+      this.ag_image = list.ag_logo_path
       this.modal_edit = true
   }
 
@@ -170,7 +170,9 @@ export class MainComponent implements OnInit {
     this.getAgents();
   }
   delete(id: string) {
-    this.CorsMainService.deleteAg(id).subscribe(() => {});
+    //@ts-ignore
+    this.CorsMainService.deleteAg(id).subscribe((r) => {if (r.status_code == 202) alert(r.detail)},
+     (err) => {alert(err)});
     this.getAgents();
   }
   logoFunc(logo: any) {

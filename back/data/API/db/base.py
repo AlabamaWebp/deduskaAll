@@ -5,7 +5,7 @@ from sqlalchemy import ForeignKey, MetaData
 
 from ...settings import conn_string
 
-engine = create_engine(conn_string, echo=True)
+engine = create_engine(conn_string, echo=False)
 meta = MetaData(engine)
 
 ProductSale = Table(
