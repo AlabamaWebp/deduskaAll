@@ -76,22 +76,24 @@ export class MainComponent implements OnInit {
   }
 
   getAgents() {
-    this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data) => {
-      this.MainData = data;
-      for (let i = 0; i < this.MainData.length; i++) {
-        if (this.MainData[i].ag_logo_path == 'none' || this.MainData[i].ag_logo_path == 'отсутствует')
-          this.MainData[i].ag_logo_path = "/agents/no_image.png";
-      }
-    }, (err) => {console.log(err)});
     this.CorsMainService.getMaxPage(this.type, this.search).subscribe((data) => {
       this.max_page = Number(data);
-    })
+      if (this.page > this.max_page) 
+        this.page = this.max_page;
+        this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data) => {
+          this.MainData = data;
+          for (let i = 0; i < this.MainData.length; i++) {
+            if (this.MainData[i].ag_logo_path == 'none' || this.MainData[i].ag_logo_path == 'отсутствует')
+              this.MainData[i].ag_logo_path = "/agents/no_image.png";
+          }
+        }, (err) => {console.log(err)});
+    });
   }
   getSearch() {
     //@ts-ignore
     let string: string | undefined = document.getElementById("search").value
     this.search = string;
-    this.page = 1;
+    // this.page = 1;
     if (string == "") {
       this.search = undefined;
     }
@@ -114,7 +116,7 @@ export class MainComponent implements OnInit {
   }
   getSort(string: string) {
     this.selected_sort = string;
-    this.page = 1;
+    // this.page = 1;
     this.type = string
     if (string == "Без фильтра")
       this.type = undefined
