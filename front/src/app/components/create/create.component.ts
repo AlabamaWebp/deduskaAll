@@ -51,7 +51,10 @@ export class CreateComponent implements OnInit {
       inn, 
       kpp, 
       logo).subscribe(() => 
-      {return 1},
+      {
+        alert("Успешно!");
+        return;
+      },
        (err) => {
          this.errors = err.error.detail;
          this.err_modal = true; 
