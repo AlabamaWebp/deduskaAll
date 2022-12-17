@@ -39,8 +39,8 @@
     </div>
     <div class="main">
         <div class="agents" *ngFor="let agent of MainData">
-            <div class="image">
-
+            <div class="image" (click)="logoFunc(agent.ag_logo_path)">
+                <img src="../../../assets{{agent.ag_logo_path}}" alt="">
             </div>
             <div class="info right">
                 <div class="info_content">{{agent.ag_type}} | {{agent.ag_title}}</div>
@@ -90,5 +90,5 @@
     [ag_phone]="ag_phone"
     [ag_inn]="ag_inn"
     [ag_kpp]="ag_kpp"
-    [ag_logo]="ag_logo_path"
+    [ag_logo]="ag_image"
 ></app-edit>

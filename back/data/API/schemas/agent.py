@@ -42,6 +42,7 @@ class AgentMain(BaseModel):
 class AgentGet(AgentMain):
     ag_sales: int = 0
     ag_disc: int = 0
+    ag_logo_path: str = ""
     ag_image_byte: typing.Any = ""
 
 class AgentPost(AgentMain):

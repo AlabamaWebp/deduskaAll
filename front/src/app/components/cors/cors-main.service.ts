@@ -68,22 +68,22 @@ export class CorsMainService {
     logo: string)   
     {
     const body = {
-      
-      ag_id: 0,
       ag_title: title,
-      ag_priority: priority,
+      ag_priority: Number(priority),
       ag_type: type,
       ag_address: address,
       ag_director: director,
       ag_email: email,
-      ag_phone: phone,
-      ag_inn: inn,
-      ag_kpp: kpp,
+      ag_phone: Number(phone),
+      ag_inn: Number(inn),
+      ag_kpp: Number(kpp),
       ag_logo_path: logo
     }
+    console.log(body)
     return this.http.post(this.url + "agent/create/", body);
   }
   deleteAg(id: string) {
+    console.log(this.url + "agent/del/" + '?agent_id='+id)
     return this.http.delete(this.url + "agent/del/" + '?agent_id='+id);
   }
   putEdit(id:number, 

@@ -13,6 +13,8 @@ backdrop22 {
     z-index: 4;
 }
 .create {
+    border: 1px solid green;
+    border-radius: 5px;
     z-index: 3;
     position: absolute;
     padding: 1rem 3rem 2rem;
@@ -24,6 +26,7 @@ backdrop22 {
     // width: 50%;
     .container {
         h2 {
+            color: green;
             text-align: center;
         }
         &_create {
@@ -35,6 +38,7 @@ backdrop22 {
                 display: inline-block;
             }
             input {
+                width: 300px;
                 color: $frontcolor;
                 border: 1px solid $frontcolor;
                 background-color: $backcolor;
@@ -64,5 +68,22 @@ backdrop22 {
     button {
         background-color: $backcolor;
         width: 100%;
+    }
+}
+.uspeh {
+    user-select: none;
+    visibility: hidden;
+}
+.anUs {
+    animation: uspeh .5s forwards;
+}
+@keyframes uspeh {
+    from {
+        visibility: visible;
+    }
+    to {
+        opacity: 0;
+        transform: translate(0, -10px);
+        display: none;
     }
 }

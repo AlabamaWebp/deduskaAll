@@ -53,6 +53,10 @@ export class EditComponent implements OnInit {
       Number(kpp),
       logo).subscribe(() => {
         this.reload.emit();
+        document.getElementsByClassName("uspeh")[0].classList.add("anUs");
+        setTimeout(() => {
+          document.getElementsByClassName("uspeh")[0].classList.remove("anUs");
+        }, 500);
         return;
       },
         (err) => {

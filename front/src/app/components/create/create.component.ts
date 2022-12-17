@@ -52,7 +52,10 @@ export class CreateComponent implements OnInit {
       kpp, 
       logo).subscribe(() => 
       {
-        alert("Успешно!");
+        document.getElementsByClassName("uspeh")[0].classList.add("anUs");
+        setTimeout(() => {
+          document.getElementsByClassName("uspeh")[0].classList.remove("anUs");
+        }, 500);
         return;
       },
        (err) => {

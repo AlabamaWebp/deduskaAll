@@ -1,4 +1,4 @@
-<div class="backdrop"></div>
+<div class="backdrop" (click)="close.emit()"></div>
 <div class="create">
     <div class="container">
         <h2>Редактирование записи</h2>
@@ -34,7 +34,8 @@
             <span>Лого</span> <input type="text" #logo [value]="ag_logo"> 
         </div>
         <div class="footer">
-            <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="edit_func(title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Создать</button>
+            <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="edit_func(title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Редактировать</button>
+            <div class="uspeh">Успех!</div>
             <button (click)="close.emit()" style="background-color: rgba(255, 0, 0, 0.3);">Закрыть</button>
         </div>
     </div>

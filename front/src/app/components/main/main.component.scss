@@ -191,10 +191,15 @@ $border_settings: solid white 1px;
         margin: 0 0 30px;
         // justify-content: space-between;
         .image {
-            height: 125px;
-            width: 200px;
+            // height: 125px;
+            // width: 126px;
             margin: 5px;
             border: $border_settings;
+            img {
+                // width: 125px;
+                min-width: 123px;
+                height: 123px;
+            }
         }
         .info {
             height: 100%;

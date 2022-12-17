@@ -1,40 +1,41 @@
-<div class="backdrop"></div>
+<div class="backdrop" (click)="close.emit()"></div>
 <div class="create">
     <div class="container">
         <h2>Создание записи</h2>
 
         <div class="container_create">
-            <span>Название</span> <input type="text" #title> 
+            <span>Название</span> <input type="text" #title value="Название предприятия"> 
         </div>
         <div class="container_create">
-            <span>Приоритет</span> <input type="number" #priority> 
+            <span>Приоритет</span> <input type="number" #priority value="999"> 
         </div>
         <div class="container_create">
-            <span>Тип</span> <input type="text" #type> 
+            <span>Тип</span> <input type="text" #type value="ОАО"> 
         </div>
         <div class="container_create">
-            <span>Адрес</span> <input type="text" #address> 
+            <span>Адрес</span> <input type="text" #address value="Москва ул.Пушкина Дом Колотушкина"> 
         </div>
         <div class="container_create">
-            <span>Директор</span> <input type="text" #director> 
+            <span>Директор</span> <input type="text" #director value="Иванов Иван Иванович"> 
         </div>
         <div class="container_create">
-            <span>Емейл</span> <input type="text" #email> 
+            <span>Емейл</span> <input type="text" #email value="ять@mail.mail"> 
         </div>
         <div class="container_create">
-            <span>Телефон</span> <input type="number" #telephone> 
+            <span>Телефон</span> <input type="number" #telephone value="88005553535"> 
         </div>
         <div class="container_create">
-            <span>ИНН</span> <input type="number" #inn> 
+            <span>ИНН</span> <input type="number" #inn value="1234567891"> 
         </div>
         <div class="container_create">
-            <span>КПП</span> <input type="number" #kpp> 
+            <span>КПП</span> <input type="number" #kpp value="123456789"> 
         </div>
         <div class="container_create">
-            <span>Лого</span> <input type="text" #logo> 
+            <span>Лого</span> <input type="text" #logo value="/agents/no_image.png"> 
         </div>
         <div class="footer">
             <button style="background-color: rgba(0, 128, 0, 0.4)" (click)="create_func(title.value, priority.value, type.value, address.value, director.value, email.value, telephone.value, inn.value, kpp.value, logo.value)">Создать</button>
+            <div class="uspeh">Успех!</div>
             <button (click)="close.emit()" style="background-color: rgba(255, 0, 0, 0.3);">Закрыть</button>
         </div>
     </div>

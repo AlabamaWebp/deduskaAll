@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { max } from 'rxjs';
 // Agent,
 import { CorsMainService } from '../cors/cors-main.service';
 import { EditComponent } from '../edit/edit.component';
@@ -23,7 +24,7 @@ export class MainComponent implements OnInit {
   ag_phone: string | undefined;
   ag_inn: string | undefined;
   ag_kpp: string | undefined;
-  ag_logo_path: string | undefined;
+  ag_image: string | undefined;
   // perem ag
 
 
@@ -38,7 +39,7 @@ export class MainComponent implements OnInit {
       this.ag_phone = list.ag_phone,
       this.ag_inn = list.ag_inn,
       this.ag_kpp = list.ag_kpp,
-      this.ag_logo_path = list.ag_logo_path
+      this.ag_image = list.ag_image
       this.modal_edit = true
   }
 
@@ -77,6 +78,10 @@ export class MainComponent implements OnInit {
   getAgents() {
     this.CorsMainService.getAgent(String(this.page), this.type, this.search, this.order_by, this.order).subscribe((data) => {
       this.MainData = data;
+      for (let i = 0; i < this.MainData.length; i++) {
+        if (this.MainData[i].ag_logo_path == 'none' || this.MainData[i].ag_logo_path == 'отсутствует')
+          this.MainData[i].ag_logo_path = "/agents/no_image.png";
+      }
     }, (err) => {console.log(err)});
     this.CorsMainService.getMaxPage(this.type, this.search).subscribe((data) => {
       this.max_page = Number(data);
@@ -86,6 +91,7 @@ export class MainComponent implements OnInit {
     //@ts-ignore
     let string: string | undefined = document.getElementById("search").value
     this.search = string;
+    this.page = 1;
     if (string == "") {
       this.search = undefined;
     }
@@ -108,6 +114,7 @@ export class MainComponent implements OnInit {
   }
   getSort(string: string) {
     this.selected_sort = string;
+    this.page = 1;
     this.type = string
     if (string == "Без фильтра")
       this.type = undefined
@@ -165,5 +172,8 @@ export class MainComponent implements OnInit {
   delete(id: string) {
     this.CorsMainService.deleteAg(id).subscribe(() => {});
     this.getAgents();
+  }
+  logoFunc(logo: any) {
+    console.log(logo)
   }
 }
