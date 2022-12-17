@@ -33,7 +33,5 @@ async def main_page():
     return RedirectResponse(url="/docs/", status_code=307)
 
 app.include_router(agent_router)
-
 app.include_router(product_router)
-
 app.include_router(debug_router)

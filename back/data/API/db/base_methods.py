@@ -165,21 +165,19 @@ def save_file_in_folder(file: File, file_format: str) -> str:
         with open(os.path.join(save_dir, filename), 'wb') as f:
             while contents := file.file.read(1024 * 1024):
                 f.write(contents)
-    except Exception as e:
+    except:
         return {
             "message": "There was an error uploading the file",
-            "values": [
-                    {"directory":save_dir},
-                    {"curtime": now},
-                    {"curdate": dtm},
-                    {"filename": filename},
-                    {"file_format":file_format},
-                ]
+            "values":   {
+                "curtime": now,
+                "curdate": dtm,
+                "filename": filename,
+                "file_format":file_format,
+            }
         }
     finally:
         file.file.close()
-
-    return db_path
+        return db_path
 
 def get_file_from_db(file_path: str) -> File:
     file = File

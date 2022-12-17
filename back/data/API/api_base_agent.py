@@ -116,7 +116,7 @@ def base_agents_select(page: int, filters: dict) -> list[AgentGet]:
 
     return out_values
 
-def base_agent_update(agent: AgentGet):
+def base_agent_update(agent: AgentPostDB):
     type_id = bm.get_agent_type_id_by_name(agent.ag_type)
 
     try:
@@ -134,7 +134,7 @@ def base_agent_update(agent: AgentGet):
         DirectorName = agent.ag_director,
         Phone = agent.ag_phone,
         Email = agent.ag_email,
-        # Logo = agent.ag_logo_path,
+        Logo = agent.ag_logo_path,
         Priority = agent.ag_priority,
     ).where(Agent.c.ID == agent.ag_id)
     value = engine.execute(query)
@@ -170,23 +170,8 @@ def base_agent_priority_update(ag_id: list[int], tgt_priority: int):
     edited = engine.execute(query).fetchall()
     return edited
 
-def base_agent_create(agent: AgentPostDB, uploaded_file: UploadFile):
+def base_agent_create(agent: AgentPostDB):
     type_id = bm.get_agent_type_id_by_name(agent.ag_type)
-
-    if not agent.ag_is_no_logo:
-        file_format = uploaded_file.filename.split(".")[-1]
-        if file_format in whitelist_image_formats:
-            filepath = bm.save_file_in_folder(uploaded_file, file_format)
-        else:
-            return HTTPException(
-                    status_code=400,
-                    detail="Invalid file format",
-                    headers={
-                        "File error": f"Current file format({file_format}) not in whitelist"
-                    },
-                )
-    else:
-        filepath = "/agents/no_logo.png"
 
     query = insert(Agent).values(
         ID = str(bm.get_last_agent_id() + 1),
@@ -198,7 +183,7 @@ def base_agent_create(agent: AgentPostDB, uploaded_file: UploadFile):
         DirectorName = agent.ag_director,
         Phone = agent.ag_phone,
         Email = agent.ag_email,
-        Logo = filepath,
+        Logo = agent.ag_logo_path,
         Priority = agent.ag_priority,
     )
     value = engine.execute(query)

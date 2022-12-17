@@ -1,6 +1,8 @@
 from pydantic import BaseModel, validator
 from pydantic import typing
 
+from fastapi import UploadFile, File
+
 class AgentMain(BaseModel):
     ag_id: int = 0
     ag_title: str = ""
@@ -19,6 +21,12 @@ class AgentMain(BaseModel):
         if len(v) < 3:
             # raise ValueError("Наименование может содержать только символы русского и латинского алфавитов")
             raise ValueError("Наименование не может быть меньше 3 символов")
+        return v
+
+    @validator("ag_type")
+    def type_validation(cls, v):
+        if not v:
+            raise ValueError("Укажите тип агента")
         return v
 
     @validator("ag_phone")

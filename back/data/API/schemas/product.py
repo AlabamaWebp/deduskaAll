@@ -7,6 +7,6 @@ class Product(BaseModel):
 
     @validator
     def min_cost_check(cls, v):
-        if v <= 0:
-            raise ValueError("Cost is 0 or negative")
+        if v < 0:
+            raise ValueError("Цена ниже 0")
         return v
